@@ -154,7 +154,8 @@ public class QuincenaDAO {
             //        "jdbc:mysql://119.8.3.41:3306/quincena_amm", "root", "c0ns0l1daMX_2021");
                     //"jdbc:mysql://94.74.70.240:3306/quincena_amm", "root", "c0ns0l1daMX_2021");
             //cStmt = con.prepareCall("{? = call APP_MOBILE_CONFIRMA_SOLICITUD_ANTICIPO(?,?,?,?)}");
-            cStmt = con.prepareCall("{? = call APP_MOBILE_CONFIRMA_SOLICITUD_ANTICIPO_2(?,?,?,?,?,?)}");
+            //cStmt = con.prepareCall("{? = call APP_MOBILE_CONFIRMA_SOLICITUD_ANTICIPO_2(?,?,?,?,?,?)}");
+            cStmt = con.prepareCall("{? = call APP_MOBILE_CONFIRMA_SOLICITUD_ANTICIPO_MI(?,?,?,?,?,?)}");
             cStmt.registerOutParameter(1, Types.OTHER);
             cStmt.setInt(2, importeAnticipo.getIdColaborador());
             cStmt.setDouble(3, Double.parseDouble(importeAnticipo.getImporteSolicitado()));
