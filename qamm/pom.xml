@@ -113,12 +113,12 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.20</version>
 		</dependency>
-
+<!--
 		<dependency>
 			<groupId>com.tabapay.api</groupId>
 			<artifactId>tpApiHelpers</artifactId>
 			<version>1.0</version>
-		</dependency>
+		</dependency>-->
 
 		<!--
 		<dependency>
