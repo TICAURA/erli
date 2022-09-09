@@ -119,6 +119,7 @@ public interface QuincenaTransformer {
         jsonPaths.add("rfcCurpBeneficiario");
         jsonPaths.add("banco");
         jsonPaths.add("dispersor");
+        jsonPaths.add("montoAculumadoDistribucionArgyle");
 
         Map<String,String> pathValues = getValueMap(dbJSON,jsonPaths);
 
@@ -141,6 +142,7 @@ public interface QuincenaTransformer {
         solicitudAnticipo.setInstitucionContraparte(pathValues.get("banco"));
         //solicitudAnticipo.setDispersor(Integer.parseInt(pathValues.get("dispersor")));
         solicitudAnticipo.setDispersor(0);
+        solicitudAnticipo.setMontoAculumadoDistribucionArgyle(pathValues.get("montoAculumadoDistribucionArgyle"));
 
         return solicitudAnticipo;
     }

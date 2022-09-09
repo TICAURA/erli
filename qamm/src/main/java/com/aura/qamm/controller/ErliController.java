@@ -55,12 +55,16 @@ public class ErliController {
     //public String payDistributionConfigs(Object paymentDist){
     public String payDistributionConfigs(@RequestBody PayDistribution paymentDist, @RequestAttribute("claims") Claims claims){
         if ((paymentDist != null) && (claims != null)) {
+            logger.info("paymentDist:" + paymentDist);
             String sClientId = (String) claims.get("clientId");
             String sPersonId = (String) claims.get("personId");
             String sCollaboratorId = (String) claims.get("collaboratorId");
+            //String commision = paymentDist.getCommision();
+
             logger.info("sClientId:" + sClientId);
             logger.info("sPersonId:" + sPersonId);
             logger.info("sCollaboratorId:" + sCollaboratorId);
+            //logger.info("commision:" + commision);
 
             logger.info("[ERLI] payDistributionConfigs");
             paymentDist.setUser(sCollaboratorId);

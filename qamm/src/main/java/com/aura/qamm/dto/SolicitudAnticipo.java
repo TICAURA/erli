@@ -28,6 +28,8 @@ public class SolicitudAnticipo {
     private String institucionContraparte;
 
     private int dispersor;
+
+    private String montoAculumadoDistribucionArgyle;
     //private String token;
 
     public Integer getIdColaborador() {
@@ -158,6 +160,14 @@ public class SolicitudAnticipo {
         this.institucionContraparte = institucionContraparte;
     }
 
+    public String getMontoAculumadoDistribucionArgyle() {
+        return montoAculumadoDistribucionArgyle;
+    }
+
+    public void setMontoAculumadoDistribucionArgyle(String montoAculumadoDistribucionArgyle) {
+        this.montoAculumadoDistribucionArgyle = montoAculumadoDistribucionArgyle;
+    }
+
     @Override
     public String toString() {
         return "SolicitudAnticipo{" +
@@ -176,8 +186,11 @@ public class SolicitudAnticipo {
                 ", nombreBeneficiario='" + nombreBeneficiario + '\'' +
                 ", referenciaNumerica='" + referenciaNumerica + '\'' +
                 ", rfcCurpBeneficiario='" + rfcCurpBeneficiario + '\'' +
+                ", beneficioAdicional='" + beneficioAdicional + '\'' +
                 ", pago_stp=" + pago_stp +
                 ", institucionContraparte='" + institucionContraparte + '\'' +
+                ", dispersor=" + dispersor +
+                ", montoAculumadoDistribucionArgyle='" + montoAculumadoDistribucionArgyle + '\'' +
                 '}';
     }
 

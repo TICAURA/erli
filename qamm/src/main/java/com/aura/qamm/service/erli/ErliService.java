@@ -184,9 +184,12 @@ public class ErliService {
         //TODO Replace 399
         PaymentRequestAmount paymentRequestAmount = new PaymentRequestAmount();
         paymentRequestAmount.setRequestedAmount(paymentDist.getAmount());
-        paymentRequestAmount.setCommisionAmount("399"); //TODO GET COMISION FROM FRONT
+        //paymentRequestAmount.setCommisionAmount(paymentDist.getCommision()); //TODO GET COMISION FROM FRONT
+        paymentRequestAmount.setCommisionAmount("399"); //OLD
+        //int total = new Double(paymentDist.getAmount()).intValue() + 399;
         Integer total = Integer.parseInt(paymentDist.getAmount()) + 399;
-        paymentRequestAmount.setTotalAmount(total.toString()); //TODO CALCULATE ME
+        //paymentRequestAmount.setTotalAmount(total.toString()); //TODO CALCULATE ME
+        paymentRequestAmount.setTotalAmount(String.valueOf(total)); //TODO CALCULATE ME
         paymentRequestAmount.setCollaboratorId(Integer.parseInt(paymentDist.getUser()));
         paymentRequestAmount.setPromotionId(null);
 
@@ -208,7 +211,8 @@ public class ErliService {
         saccountNumberTP = "100000000";
 
         //String centsAmountString = paymentDist.getAmount()  + ".00";
-        String centsAmountString = paymentDist.getAmount()  + "00";
+        //String centsAmountString = paymentDist.getAmount()  + "00";
+        String centsAmountString = paymentDist.getAmount();
         //Integer centsAmount = Integer.parseInt(centsAmountString)+100;
         Integer centsAmount =  new Double(centsAmountString).intValue();
         String toBeSigned = int_random + ":" +
@@ -229,13 +233,20 @@ public class ErliService {
                 "\"address\":{\"line1\":\"\",\"line2\":\"\",\"city\":\"\"," +
                 "\"state\":\"\",\"zipcode\":\"\",\"country\":\"\"},\"phone\":" +
                 "{\"countryCode\":\"" + telCountry.replace("+","") + "\",\"number\":\"" + telNumber + "\"}}}},\"amount\":\"" +
-                 paymentDist.getAmount()  + ".00\",\"achOptions\": \"R\"" + "," +
+                 paymentDist.getAmount() + "\",\"achOptions\": \"R\"" + "," +
                 "\"rtp\":{\"apiKey\":\"4ac39e5ce45461c569b53922c85f827742ba40ca2565724c16\", \"signature\":\"" + signed + "\"}" +
                 "}";
+        /**
         String apiProps = "exec-transaction.properties";
         Properties servicePropertiesEntities = propertiesHelper.loadProperties(
                 apiProps, "Create Transaction");
         String resultPay = serviceInvoker.invokeBasicAuthBody(servicePropertiesEntities,tpBody);
+         */
+        String apiProps = "paymentEngine.properties";
+        Properties servicePropertiesEntities = propertiesHelper.loadProperties(
+                apiProps, "Create Delegated Transaction");
+        String resultPay = serviceInvoker.invokeBasicAuthBody(servicePropertiesEntities,tpBody);
+
         Map<String,String> resultPayJPs = JSONPathUtil.getAllPathWithValues(resultPay);
         String idTabapay = resultPayJPs.get("$['transactionID']");
 
