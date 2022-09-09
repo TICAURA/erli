@@ -186,8 +186,8 @@ public class ErliService {
         paymentRequestAmount.setRequestedAmount(paymentDist.getAmount());
         //paymentRequestAmount.setCommisionAmount(paymentDist.getCommision()); //TODO GET COMISION FROM FRONT
         paymentRequestAmount.setCommisionAmount("399"); //OLD
-        //int total = new Double(paymentDist.getAmount()).intValue() + 399;
-        Integer total = Integer.parseInt(paymentDist.getAmount()) + 399;
+        int total = new Double(paymentDist.getAmount()).intValue() + 399;
+        //Integer total = Integer.parseInt(paymentDist.getAmount()) + 399;
         //paymentRequestAmount.setTotalAmount(total.toString()); //TODO CALCULATE ME
         paymentRequestAmount.setTotalAmount(String.valueOf(total)); //TODO CALCULATE ME
         paymentRequestAmount.setCollaboratorId(Integer.parseInt(paymentDist.getUser()));
