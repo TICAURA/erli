@@ -350,6 +350,7 @@ public class ServiceInvoker {
             //String httpAuth = "Bearer m3ZdIiRO5A0688V8DHXHDkBwpvPkXqk6SA";
             //logger.info("httpAuth:" + httpAuth);
 
+            /**
             switch (httpAuthType){
                 case "TokenBearer":
                     String httpAuth = (String) serviceProperties.get("http_Authorization");
@@ -367,7 +368,7 @@ public class ServiceInvoker {
                     break;
                 default:
                     logger.info("No authorization specified on WS File");
-            }
+            }*/
 
             if (srvMethod.equals("POST")) {
                 String jsonInputString = body;
