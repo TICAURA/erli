@@ -189,18 +189,23 @@ public class ErliService {
         PaymentRequestAmount paymentRequestAmount = new PaymentRequestAmount();
         paymentRequestAmount.setRequestedAmount(paymentDist.getAmount());
         //paymentRequestAmount.setCommisionAmount(paymentDist.getCommision()); //TODO GET COMISION FROM FRONT
-        paymentRequestAmount.setCommisionAmount("399"); //OLD
+
 
         String comAnti = quincenaDAO.consultaComisionAnticipo(new Integer(paymentDist.getUser()),new Double(paymentDist.getAmount()));
         Map<String,String> jPathsCA = JSONPathUtil.getAllPathWithValues(comAnti);
         String sComision = jPathsCA.get("$['comision']");
+        String sTotal = jPathsCA.get("$['total']");
+
+        paymentRequestAmount.setCommisionAmount(sComision); //OLD
 
         //int total = new Double(paymentDist.getAmount()).intValue() + 399;
-        int total = new Double(paymentDist.getAmount()).intValue() + new Double(sComision).intValue();
+        //int total = new Double(paymentDist.getAmount()).intValue() + new Double(sComision).intValue();
+        //int total = new Double(paymentDist.getAmount()).intValue();
 
         //Integer total = Integer.parseInt(paymentDist.getAmount()) + 399;
         //paymentRequestAmount.setTotalAmount(total.toString()); //TODO CALCULATE ME
-        paymentRequestAmount.setTotalAmount(String.valueOf(total)); //TODO CALCULATE ME
+        //paymentRequestAmount.setTotalAmount(String.valueOf(total)); //TODO CALCULATE ME
+        paymentRequestAmount.setTotalAmount(sTotal); //TODO CALCULATE ME
         paymentRequestAmount.setCollaboratorId(Integer.parseInt(paymentDist.getUser()));
         paymentRequestAmount.setPromotionId(null);
 
@@ -239,7 +244,7 @@ public class ErliService {
         //String tpBody = "{\"referenceID\":\"" + int_random + "\",\"type\":\"push\",\"accounts\":{\"sourceAccountID\":\"D0smSJAUAQyMUacBkVpXdA\"," +
         //String tpBody = "{\"referenceID\":\"" + int_random + "\",\"type\":\"push\",\"accounts\":{\"sourceAccountID\":\"DAAIBnYUiKb6PcekmjQVzw\"," +
         String tpBody = "{\"referenceID\":\"" + idErliTransaction + "\",\"type\":\"push\",\"accounts\":{\"sourceAccountID\":\"DAAIBnYUiKb6PcekmjQVzw\"," +
-                "\"destinationAccount\":" +
+                "\"destinationAccount\":"  +
                 //"{\"bank\":{\"routingNumber\": \"" + sroutingNumberTP + "\",\"accountNumber\":\"" + saccountNumberTP + "\",\"accountType\":\"" + saccountTypeTP + "\"}," +
                 "{\"bank\":{\"routingNumber\": \"" + sroutingNumberTP + "\",\"accountNumber\":\"" + saccountNumberTP + "\",\"accountType\":\"S\"}," +
                 "\"owner\":{\"name\":{\"first\":\"" + firstName + "\",\"middle\":\"\",\"last\":\"" + lastName  + "\",\"suffix\": \"\"}," +

@@ -364,6 +364,11 @@ public class ErliDAO {
             cStmt = con.prepareCall("{? = call APP_MOBILE_CONFIRMA_SOLICITUD_ANTICIPO_MI(?,?,?,?,?,?)}");
             cStmt.registerOutParameter(1, Types.OTHER);
             cStmt.setInt(2, paymentRequestCF.getCollaboratorId());
+
+            logger.info("getRequestedAmount" + Double.parseDouble(paymentRequestCF.getRequestedAmount());
+            logger.info("getCommisionAmount" + Double.parseDouble(paymentRequestCF.getCommisionAmount());
+            logger.info("getTotalAmount" + Double.parseDouble(paymentRequestCF.getTotalAmount());
+
             cStmt.setDouble(3, Double.parseDouble(paymentRequestCF.getRequestedAmount()));
             cStmt.setDouble(4, Double.parseDouble(paymentRequestCF.getCommisionAmount()));
             cStmt.setDouble(5, Double.parseDouble(paymentRequestCF.getTotalAmount()));
