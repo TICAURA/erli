@@ -116,7 +116,7 @@ public class QuincenaDAO {
             //con = DriverManager.getConnection(
             //        "jdbc:mysql://119.8.3.41:3306/quincena_amm", "root", "c0ns0l1daMX_2021");
                     //"jdbc:mysql://94.74.70.240:3306/quincena_amm", "root", "c0ns0l1daMX_2021");
-            cStmt = con.prepareCall("{? = call APP_MOBILE_CUENTA_BANCARIA(?)}");
+            cStmt = con.prepareCall("{? = call APP_MOBILE_CUENTA_BANCARIA_MI(?)}");
             cStmt.registerOutParameter(1, Types.OTHER);
             cStmt.setInt(2, idColaborador);
             cStmt.execute();
