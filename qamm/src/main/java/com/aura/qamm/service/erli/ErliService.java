@@ -196,7 +196,7 @@ public class ErliService {
         String sComision = jPathsCA.get("$['comision']");
 
         //int total = new Double(paymentDist.getAmount()).intValue() + 399;
-        int total = new Double(paymentDist.getAmount()).intValue() + new Integer(sComision).intValue();
+        int total = new Double(paymentDist.getAmount()).intValue() + new Double(sComision).intValue();
 
         //Integer total = Integer.parseInt(paymentDist.getAmount()) + 399;
         //paymentRequestAmount.setTotalAmount(total.toString()); //TODO CALCULATE ME
