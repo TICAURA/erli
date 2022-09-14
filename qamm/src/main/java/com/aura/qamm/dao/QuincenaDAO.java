@@ -330,6 +330,7 @@ public class QuincenaDAO {
             //con = DriverManager.getConnection(
             //        "jdbc:mysql://119.8.3.41:3306/quincena_amm", "root", "c0ns0l1daMX_2021");
                     //"jdbc:mysql://94.74.70.240:3306/quincena_amm", "root", "c0ns0l1daMX_2021");
+            /**
             String sqlQuery =
                     "SELECT a.clave_autorizacion, a.fch_solicita, a.fch_transferencia, " +
                     " a.total, a.importe, a.comision, a.promocion, a.promocion_id, a.id_anti, c.periodicidad, c1.centro_costos_clnt_id, c1.clnt_id " +
@@ -344,7 +345,17 @@ public class QuincenaDAO {
                     " AND ca.centro_costos_clnt_id = c1.centro_costos_clnt_id " +
                     " AND ca.es_activo IS TRUE " +
                     " AND ca.periodicidad = c.periodicidad) " +
-                    " ORDER BY a.id_anti DESC;";
+                    " ORDER BY a.id_anti DESC;";*/
+
+            String sqlQuery = "SELECT  e.s_clave_rastreo as clave_autorizacion , a.fch_solicita, a.fch_transferencia, \n" +
+                    "a.total, a.importe, a.comision, a.promocion, a.promocion_id, a.id_anti, c.periodicidad, c1.centro_costos_clnt_id, c1.clnt_id \n" +
+                    "FROM anticipo a \n" +
+                    "INNER JOIN colaborador c ON ( a.pers_id = c.pers_id AND a.fch_ingreso = c.fch_ingreso AND a.clnt_id = c.clnt_id  ) \n" +
+                    "INNER JOIN cliente c1 ON ( c.clnt_id = c1.clnt_id  )  \n" +
+                    "INNER JOIN evento_pago e ON ( a.id_anti = e.id_anti  )  \n" +
+                    "WHERE c.clave_colaborador = 400000600\n" +
+                    "AND c.es_activo IS TRUE \n" +
+                    "ORDER BY a.id_anti DESC;";
 
             pStmt = con.prepareCall(sqlQuery);
             //pStmt.registerOutParameter(1, Types.OTHER);
