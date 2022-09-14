@@ -365,9 +365,9 @@ public class ErliDAO {
             cStmt.registerOutParameter(1, Types.OTHER);
             cStmt.setInt(2, paymentRequestCF.getCollaboratorId());
 
-            logger.info("getRequestedAmount" + Double.parseDouble(paymentRequestCF.getRequestedAmount());
-            logger.info("getCommisionAmount" + Double.parseDouble(paymentRequestCF.getCommisionAmount());
-            logger.info("getTotalAmount" + Double.parseDouble(paymentRequestCF.getTotalAmount());
+            logger.info("getRequestedAmount" + Double.parseDouble(paymentRequestCF.getRequestedAmount()));
+            logger.info("getCommisionAmount" + Double.parseDouble(paymentRequestCF.getCommisionAmount()));
+            logger.info("getTotalAmount" + Double.parseDouble(paymentRequestCF.getTotalAmount()));
 
             cStmt.setDouble(3, Double.parseDouble(paymentRequestCF.getRequestedAmount()));
             cStmt.setDouble(4, Double.parseDouble(paymentRequestCF.getCommisionAmount()));
