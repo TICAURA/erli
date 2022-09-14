@@ -1,6 +1,7 @@
 package com.aura.qamm.service.erli;
 
 import com.aura.qamm.dao.ErliDAO;
+import com.aura.qamm.dao.QuincenaDAO;
 import com.aura.qamm.model.payment.CardAccount;
 import com.aura.qamm.model.payroll.*;
 import com.aura.qamm.util.JSONPathUtil;
@@ -39,6 +40,9 @@ public class ErliService {
 
     @Autowired
     TabaPayHelper tabapayHelper;
+
+    @Autowired
+    QuincenaDAO quincenaDAO;
 
     Logger logger = LoggerFactory.getLogger(ErliService.class);
 
@@ -186,7 +190,14 @@ public class ErliService {
         paymentRequestAmount.setRequestedAmount(paymentDist.getAmount());
         //paymentRequestAmount.setCommisionAmount(paymentDist.getCommision()); //TODO GET COMISION FROM FRONT
         paymentRequestAmount.setCommisionAmount("399"); //OLD
-        int total = new Double(paymentDist.getAmount()).intValue() + 399;
+
+        String comAnti = quincenaDAO.consultaComisionAnticipo(new Integer(paymentDist.getUser()),new Double(paymentDist.getAmount()));
+        Map<String,String> jPathsCA = JSONPathUtil.getAllPathWithValues(comAnti);
+        String sComision = jPathsCA.get("$['comision']");
+
+        //int total = new Double(paymentDist.getAmount()).intValue() + 399;
+        int total = new Double(paymentDist.getAmount()).intValue() + new Integer(sComision).intValue();
+
         //Integer total = Integer.parseInt(paymentDist.getAmount()) + 399;
         //paymentRequestAmount.setTotalAmount(total.toString()); //TODO CALCULATE ME
         paymentRequestAmount.setTotalAmount(String.valueOf(total)); //TODO CALCULATE ME
