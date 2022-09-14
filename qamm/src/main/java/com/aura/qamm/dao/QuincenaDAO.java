@@ -353,7 +353,7 @@ public class QuincenaDAO {
                     "INNER JOIN colaborador c ON ( a.pers_id = c.pers_id AND a.fch_ingreso = c.fch_ingreso AND a.clnt_id = c.clnt_id  ) \n" +
                     "INNER JOIN cliente c1 ON ( c.clnt_id = c1.clnt_id  )  \n" +
                     "INNER JOIN evento_pago e ON ( a.id_anti = e.id_anti  )  \n" +
-                    "WHERE c.clave_colaborador = 400000600\n" +
+                    "WHERE c.clave_colaborador = ? \n" +
                     "AND c.es_activo IS TRUE \n" +
                     "ORDER BY a.id_anti DESC;";
 
