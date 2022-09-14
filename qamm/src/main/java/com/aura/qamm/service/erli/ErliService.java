@@ -264,7 +264,7 @@ public class ErliService {
         Properties servicePropertiesEntities = propertiesHelper.loadProperties(
                 apiProps, "Create Delegated Transaction");
         //String resultPay = serviceInvoker.invokeBasicHTTPAuthBody(servicePropertiesEntities,tpBody);
-
+        String resultPay = "";
         Map<String,String> resultPayJPs = JSONPathUtil.getAllPathWithValues(resultPay);
         String idTabapay = resultPayJPs.get("$['transactionID']");
 
