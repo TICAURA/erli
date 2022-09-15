@@ -3,7 +3,9 @@ package com.aura.qamm.model.payroll;
 public class PayDistribution {
     private String user;
     private String amount;
-    private String commision;
+    private String montoAculumadoDistribucionArgyle;
+    private String fee;
+
 
     public String getUser() {
         return user;
@@ -21,12 +23,20 @@ public class PayDistribution {
         this.amount = amount;
     }
 
-    public String getCommision() {
-        return commision;
+    public String getMontoAculumadoDistribucionArgyle() {
+        return montoAculumadoDistribucionArgyle;
     }
 
-    public void setCommision(String commision) {
-        this.commision = commision;
+    public void setMontoAculumadoDistribucionArgyle(String montoAculumadoDistribucionArgyle) {
+        this.montoAculumadoDistribucionArgyle = montoAculumadoDistribucionArgyle;
+    }
+
+    public String getFee() {
+        return fee;
+    }
+
+    public void setFee(String fee) {
+        this.fee = fee;
     }
 
     @Override
@@ -34,7 +44,8 @@ public class PayDistribution {
         return "PayDistribution{" +
                 "user='" + user + '\'' +
                 ", amount='" + amount + '\'' +
-                ", commision='" + commision + '\'' +
+                ", montoAculumadoDistribucionArgyle='" + montoAculumadoDistribucionArgyle + '\'' +
+                ", fee='" + fee + '\'' +
                 '}';
     }
 }

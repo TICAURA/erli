@@ -172,9 +172,9 @@ public class ErliService {
                 //"            \"max_value\": \"40\"\n" +
                 //"    },\n" +
                 "    \"amount_allocation\": {\n" +
-                "            \"value\":     \"" + paymentDist.getAmount() + "\",\n" +
-                "            \"min_value\": \""  + paymentDist.getAmount()  + "\",\n" +
-                "            \"max_value\": \"" + paymentDist.getAmount() + "\"\n" +
+                "            \"value\":     \"" + paymentDist.getMontoAculumadoDistribucionArgyle() + "\",\n" +
+                "            \"min_value\": \""  + paymentDist.getMontoAculumadoDistribucionArgyle()  + "\",\n" +
+                "            \"max_value\": \"" + paymentDist.getMontoAculumadoDistribucionArgyle() + "\"\n" +
                 "    },\n" +
                 "    \"entire_allocation\": false,\n" +
                 //"    \"allow_add_allocation\": true,\n" +
@@ -190,13 +190,14 @@ public class ErliService {
         paymentRequestAmount.setRequestedAmount(paymentDist.getAmount());
         //paymentRequestAmount.setCommisionAmount(paymentDist.getCommision()); //TODO GET COMISION FROM FRONT
 
+        //Removed Block of persistance
+        //String comAnti = quincenaDAO.consultaComisionAnticipo(new Integer(paymentDist.getUser()),new Double(paymentDist.getAmount()));
+        //Map<String,String> jPathsCA = JSONPathUtil.getAllPathWithValues(comAnti);
+        //String sComision = jPathsCA.get("$['comision']");
+        //String sTotal = jPathsCA.get("$['total']");
 
-        String comAnti = quincenaDAO.consultaComisionAnticipo(new Integer(paymentDist.getUser()),new Double(paymentDist.getAmount()));
-        Map<String,String> jPathsCA = JSONPathUtil.getAllPathWithValues(comAnti);
-        String sComision = jPathsCA.get("$['comision']");
-        String sTotal = jPathsCA.get("$['total']");
-
-        paymentRequestAmount.setCommisionAmount(sComision); //OLD
+        //paymentRequestAmount.setCommisionAmount(sComision); //OLD
+        paymentRequestAmount.setCommisionAmount(paymentDist.getFee()); //OLD
 
         //int total = new Double(paymentDist.getAmount()).intValue() + 399;
         //int total = new Double(paymentDist.getAmount()).intValue() + new Double(sComision).intValue();
@@ -205,7 +206,13 @@ public class ErliService {
         //Integer total = Integer.parseInt(paymentDist.getAmount()) + 399;
         //paymentRequestAmount.setTotalAmount(total.toString()); //TODO CALCULATE ME
         //paymentRequestAmount.setTotalAmount(String.valueOf(total)); //TODO CALCULATE ME
-        paymentRequestAmount.setTotalAmount(sTotal); //TODO CALCULATE ME
+
+        //paymentRequestAmount.setTotalAmount(sTotal); //TODO CALCULATE ME
+        Double dTotal = Double.parseDouble(paymentDist.getFee()) + Double.parseDouble(paymentDist.getAmount());
+        logger.info("dTotal:" + dTotal);
+        logger.info("dTotal:" + dTotal.toString());
+        paymentRequestAmount.setTotalAmount(dTotal.toString()); //TODO CALCULATE ME
+
         paymentRequestAmount.setCollaboratorId(Integer.parseInt(paymentDist.getUser()));
         paymentRequestAmount.setPromotionId(null);
 
