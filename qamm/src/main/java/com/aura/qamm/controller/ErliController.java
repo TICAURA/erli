@@ -253,6 +253,8 @@ public class ErliController {
     @CrossOrigin(origins = "*")
     public String acumulator(@RequestAttribute("claims") Claims claims, @RequestBody Language language){
         logger.info("acumulator claims:" + claims);
+        logger.info("resRecordDef language:" + language);
+
         String sCollaboratorId = (String) claims.get("collaboratorId");
         logger.info("sCollaboratorId:" + sCollaboratorId);
         Long lCollaboratorId = Long.parseLong(sCollaboratorId);
