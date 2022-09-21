@@ -1,7 +1,5 @@
 package com.aura.qamm.controller;
 
-import com.aura.qamm.model.Acumulator;
-import com.aura.qamm.model.payment.CardAccount;
 import com.aura.qamm.model.payroll.PayDistribution;
 import com.aura.qamm.model.payroll.UserCredentials;
 import com.aura.qamm.model.payroll.UserPR;
@@ -235,21 +233,28 @@ public class ErliController {
 
     @PostMapping("recDeferred")
     @CrossOrigin(origins = "*")
-    public String recDeferred(@RequestBody Acumulator acumulator){
+    public String recDeferred(@RequestAttribute("claims") Claims claims){
+        logger.info("resRecordDef claims:" + claims);
+        String sCollaboratorId = (String) claims.get("collaboratorId");
+        logger.info("sCollaboratorId:" + sCollaboratorId);
+        Long lCollaboratorId = Long.parseLong(sCollaboratorId);
+        logger.info("lCollaboratorId:" + lCollaboratorId);
 
-         logger.info("recDeferred acumulator:" + acumulator);
-         String resRecordDef = erliService.recordDeferred(acumulator.getCveColaborador());
-         logger.info("resRecordDef:" + resRecordDef);
+        String resRecordDef = erliService.recordDeferred(lCollaboratorId);
+        logger.info("resRecordDef:" + resRecordDef);
 
         return resRecordDef;
     }
 
     @PostMapping("acumulator")
     @CrossOrigin(origins = "*")
-    public String acumulator(@RequestBody Acumulator acumulator){
-
-        logger.info("acumulator:" + acumulator);
-        String resAcumulator = erliService.acumulator(acumulator.getCveColaborador());
+    public String acumulator(@RequestAttribute("claims") Claims claims){
+        logger.info("acumulator claims:" + claims);
+        String sCollaboratorId = (String) claims.get("collaboratorId");
+        logger.info("sCollaboratorId:" + sCollaboratorId);
+        Long lCollaboratorId = Long.parseLong(sCollaboratorId);
+        logger.info("lCollaboratorId:" + lCollaboratorId);
+        String resAcumulator = erliService.acumulator(lCollaboratorId);
         logger.info("resAcumulator:" + resAcumulator);
 
         return resAcumulator;

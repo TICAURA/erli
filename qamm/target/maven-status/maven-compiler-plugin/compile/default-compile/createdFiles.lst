@@ -7,7 +7,6 @@ com/aura/qamm/service/PromocionService.class
 com/aura/qamm/dto/SolicitudAnticipo.class
 com/aura/qamm/controller/PromocionController.class
 com/aura/qamm/model/payroll/UserCredentials.class
-com/aura/qamm/model/Acumulator.class
 com/aura/qamm/model/payroll/ArgyleEmployment.class
 com/aura/qamm/config/JwtRequestFilter.class
 com/aura/qamm/config/WebSecurityConfig.class
