@@ -34,6 +34,7 @@
 /Users/soniko/2022/erli_release2/erli/qamm/src/main/java/com/aura/qamm/dto/ResultExecution.java
 /Users/soniko/2022/erli_release2/erli/qamm/src/main/java/com/aura/qamm/dto/facturacion/DocumentoDTO.java
 /Users/soniko/2022/erli_release2/erli/qamm/src/main/java/com/aura/qamm/util/PromoENUM.java
+/Users/soniko/2022/erli_release2/erli/qamm/src/main/java/com/aura/qamm/model/Acumulator.java
 /Users/soniko/2022/erli_release2/erli/qamm/src/main/java/com/aura/qamm/service/NotificationService.java
 /Users/soniko/2022/erli_release2/erli/qamm/src/main/java/com/aura/qamm/dto/ImporteAnticipo.java
 /Users/soniko/2022/erli_release2/erli/qamm/src/main/java/com/aura/qamm/model/payroll/PaymentRequestExecution.java

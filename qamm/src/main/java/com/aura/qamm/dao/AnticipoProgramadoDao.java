@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 public class AnticipoProgramadoDao {
-
+    /**
     Logger LOGGER = LoggerFactory.getLogger(AuthDao.class);
 
     @Autowired
@@ -141,5 +141,5 @@ public class AnticipoProgramadoDao {
         anticipoProgramado.setPeriodo(rs.getInt("periodo"));
         return anticipoProgramado;
     }
-
+    */
 }

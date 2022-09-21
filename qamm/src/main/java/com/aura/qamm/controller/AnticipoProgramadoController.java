@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("anticipo-programado")
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
 public class AnticipoProgramadoController {
-
+    /**
     Logger logger = LoggerFactory.getLogger(AnticipoProgramadoController.class);
 
     @Autowired
@@ -96,6 +96,6 @@ public class AnticipoProgramadoController {
             return new ResponseEntity<Object>("{\"error\":\"Unexpected error\"}",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    */
 
 }

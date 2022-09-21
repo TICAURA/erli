@@ -720,5 +720,13 @@ public class ErliService {
         return tabapayHelper.unsignRequest(signed);
     }
 
+    public String acumulator(Long cveColaborador){
+        return erliDAO.acumulator(cveColaborador);
+    }
+
+    public String recordDeferred(Long cveColaborador){
+        return erliDAO.recordDeferred(cveColaborador);
+    }
+
 }
 

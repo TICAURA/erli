@@ -21,7 +21,7 @@ public class PromocionService {
     @Autowired
     private PromocionDao promocionDao;
 
-
+    /**
     public List<Promocion> getPromociones() throws BusinessException{
         return promocionDao.getPromociones();
     }
@@ -30,14 +30,15 @@ public class PromocionService {
     }
     public List<Promocion> getPromocionesPorColaborador(int claveColaborador) throws BusinessException{
         return promocionDao.getPromocionPorColaborador(claveColaborador);
-    }
+    }*/
 
+    /**
     public List<Promocion> getPromocionesPorColaboradorTodas(int claveColaborador) throws BusinessException{
         return promocionDao.getPromocionPorColaboradorUtilizadas(claveColaborador);
-    }
+    }*/
 
 
-
+    /**
     public void canjearPromocion(int claveColaborador, String uuid) throws BusinessException{
         //obtener uuid promocion
         Promocion promocion = promocionDao.obtenerPorUuid(uuid);
@@ -58,8 +59,8 @@ public class PromocionService {
         }
 
         promocionDao.canjearPromocion(promocion.getIdPromocion(),claveColaborador);
-    }
-
+    }*/
+    /**
     public void cobrarPromocion(ImporteAnticipo importeAnticipo) throws BusinessException {
         //validar que la promocion exista y que este en 0
         Promocion promocion = promocionDao.validarPromocion(importeAnticipo.getIdPromocion(),importeAnticipo.getIdColaborador());
@@ -95,7 +96,7 @@ public class PromocionService {
         promocionDao.ejecutarPromocion(importeAnticipo.getIdPromocion(),importeAnticipo.getIdColaborador());
 
 
-    }
+    }*/
 
 
 

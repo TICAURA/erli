@@ -26,6 +26,7 @@ public @Data class Promocion {
     Date fechaCobro;
 
 
+    /**
     public static Promocion build(ResultSet resultSet) throws SQLException {
         Promocion promocion = new Promocion();
         promocion.setIdPromocion(resultSet.getInt("promocion_id"));
@@ -42,6 +43,6 @@ public @Data class Promocion {
         promocion.setActivo(resultSet.getBoolean("es_activo"));
 
         return promocion;
-    }
+    }*/
 
 }

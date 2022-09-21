@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("promociones")
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 public class PromocionController {
+    /**
     @Autowired
     private PromocionService promocionService;
 
@@ -113,5 +114,5 @@ public class PromocionController {
         }
 
     }
-
+    */
 }

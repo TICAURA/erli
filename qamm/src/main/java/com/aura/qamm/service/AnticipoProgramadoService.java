@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class AnticipoProgramadoService {
+    /**
     //TODO log a todos mis endpoints
     @Autowired
     private AnticipoProgramadoDao anticipoProgramadoDao;
@@ -38,5 +39,5 @@ public class AnticipoProgramadoService {
     }
     public void deleteAnticipoProgramado(int idColaborador, int anticipoProgramadoId) throws BusinessException{
         anticipoProgramadoDao.deleteAnticipoProgramado(idColaborador,anticipoProgramadoId);
-    }
+    }*/
 }

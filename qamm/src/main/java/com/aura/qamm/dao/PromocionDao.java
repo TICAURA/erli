@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 public class PromocionDao {
-
+    /**
     Logger LOGGER = LoggerFactory.getLogger(PromocionDao.class);
 
     @Autowired
@@ -65,7 +65,8 @@ public class PromocionDao {
             throw new BusinessException(e.getMessage(),500);
         }
     }
-
+    */
+    /**
     public List<Promocion> getPromocionPorColaborador(int claveColaborador) throws BusinessException {
         DataSource dataSource = dataSourceConfig.getDataSource();
 
@@ -92,8 +93,9 @@ public class PromocionDao {
             LOGGER.error("Error obteniendo la promocion: "+e.getMessage(),e);
             throw new BusinessException(e.getMessage(),500);
         }
-    }
+    }*/
 
+    /**
     public List<Promocion> getPromocionPorColaboradorUtilizadas(int claveColaborador) throws BusinessException {
         DataSource dataSource = dataSourceConfig.getDataSource();
 
@@ -120,8 +122,8 @@ public class PromocionDao {
             LOGGER.error("Error obteniendo la promocion: "+e.getMessage(),e);
             throw new BusinessException(e.getMessage(),500);
         }
-    }
-
+    }*/
+    /**
     public void ejecutarPromocion(int idPromocion,int claveColaborador) throws BusinessException {
         DataSource dataSource = dataSourceConfig.getDataSource();
 
@@ -155,6 +157,7 @@ public class PromocionDao {
         }
     }
 
+    /**
     public Promocion validarPromocion(int idPromocion,int claveColaborador)throws BusinessException {
         DataSource dataSource = dataSourceConfig.getDataSource();
         String query = "call PROMO_BUSCAR_PROMO_COLABORADOR(?,?);";
@@ -178,8 +181,8 @@ public class PromocionDao {
             LOGGER.error("Error checando si la promocion existe: "+e.getMessage(),e);
             throw new BusinessException(e.getMessage(),500);
         }
-    }
-
+    }*/
+    /**
     public Promocion obtenerPorUuid(String uuid)throws BusinessException {
         DataSource dataSource = dataSourceConfig.getDataSource();
         String query = "call PROMO_OBTENER_POR_UUID(?);";
@@ -198,7 +201,7 @@ public class PromocionDao {
             LOGGER.error("Error checando si la promocion existe: "+e.getMessage(),e);
             throw new BusinessException(e.getMessage(),500);
         }
-    }
+    }*/
 
 
 

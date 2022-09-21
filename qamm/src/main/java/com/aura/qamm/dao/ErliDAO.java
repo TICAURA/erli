@@ -447,6 +447,132 @@ public class ErliDAO {
 
         return resultJSON;
     }
+    /**
+    public String confirmPaymentTP(Tabapay tabapay){
+        String resultJSON = null;
+        Connection con = null;
+        CallableStatement cStmt = null;
+        try {
+            DataSource dataSource = dataSourceConfig.getDataSource();
+            con = dataSource.getConnection();
+
+            cStmt = con.prepareCall("{? = call APP_MOBILE_API_PAGO_SOLICITA_TABAPAY(?,?,?,?)}");
+            cStmt.registerOutParameter(1, Types.OTHER);
+
+            cStmt.setInt(2, Integer.parseInt(tabapay.getErliTransaction()));
+            cStmt.setString(3, tabapay.getRequestBody());
+            //cStmt.setString(4, pago_stp.getCadenaSellada());
+            cStmt.setString(4, tabapay.getTransactionID());
+            cStmt.setString(5, tabapay.getResponseBody());
+
+            cStmt.execute();
+            resultJSON = cStmt.getString(1);
+
+            logger.info("Confim Payment resultJSON:" + resultJSON);
+        }
+        catch (Exception e){
+            logger.error("DAO Exception Confim Payment:" + e.getMessage());
+            e.printStackTrace();
+        }
+        finally {
+            try { if (cStmt != null) { cStmt.close(); }
+            }
+            catch (Exception eSt) {
+                logger.error("Closure Sentence Excepcion:" + eSt.getMessage());
+            }
+            try { if (con != null) { con.close(); }
+            }
+            catch (Exception eCon) {
+                logger.error("Closure Connection Excepcion:" + eCon.getMessage());
+            }
+        }
+
+        return resultJSON;
+    }
+    */
+    public String recordDeferred(Long cveColaborador){
+        String resultJSON = null;
+        Connection con = null;
+        CallableStatement cStmt = null;
+        try {
+            DataSource dataSource = dataSourceConfig.getDataSource();
+            con = dataSource.getConnection();
+
+            cStmt = con.prepareCall("{? = call APP_MOBILE_DIFIERE_REGISTRO_MI(?)}");
+            cStmt.registerOutParameter(1, Types.OTHER);
+
+            cStmt.setLong(2, cveColaborador);
+            //cStmt.setString(3, tabapay.getRequestBody());
+            //cStmt.setString(4, pago_stp.getCadenaSellada());
+            //cStmt.setString(4, tabapay.getTransactionID());
+            //cStmt.setString(5, tabapay.getResponseBody());
+
+            cStmt.execute();
+            resultJSON = cStmt.getString(1);
+
+            logger.info("Record Deferred resultJSON:" + resultJSON);
+        }
+        catch (Exception e){
+            logger.error("Record Deferred Exception:" + e.getMessage());
+            e.printStackTrace();
+        }
+        finally {
+            try { if (cStmt != null) { cStmt.close(); }
+            }
+            catch (Exception eSt) {
+                logger.error("Closure Sentence Excepcion:" + eSt.getMessage());
+            }
+            try { if (con != null) { con.close(); }
+            }
+            catch (Exception eCon) {
+                logger.error("Closure Connection Excepcion:" + eCon.getMessage());
+            }
+        }
+
+        return resultJSON;
+    }
+
+    public String acumulator(Long cveColaborador){
+        String resultJSON = null;
+        Connection con = null;
+        CallableStatement cStmt = null;
+        try {
+            DataSource dataSource = dataSourceConfig.getDataSource();
+            con = dataSource.getConnection();
+
+            cStmt = con.prepareCall("{? = call APP_MOBILE_ACUMULADOS_MI(?)}");
+            cStmt.registerOutParameter(1, Types.OTHER);
+
+            cStmt.setLong(2, cveColaborador);
+            //cStmt.setString(3, tabapay.getRequestBody());
+            //cStmt.setString(4, pago_stp.getCadenaSellada());
+            //cStmt.setString(4, tabapay.getTransactionID());
+            //cStmt.setString(5, tabapay.getResponseBody());
+
+            cStmt.execute();
+            resultJSON = cStmt.getString(1);
+
+            logger.info("Acumulator resultJSON:" + resultJSON);
+        }
+        catch (Exception e){
+            logger.error("Acumulator Exception:" + e.getMessage());
+            e.printStackTrace();
+        }
+        finally {
+            try { if (cStmt != null) { cStmt.close(); }
+            }
+            catch (Exception eSt) {
+                logger.error("Closure Sentence Excepcion:" + eSt.getMessage());
+            }
+            try { if (con != null) { con.close(); }
+            }
+            catch (Exception eCon) {
+                logger.error("Closure Connection Excepcion:" + eCon.getMessage());
+            }
+        }
+
+        return resultJSON;
+    }
 
     private CallableStatement setFields(Map<Integer, ArgyleEntity> fieldMap, CallableStatement callableStatement){
         logger.info("fieldMap.size():" + fieldMap.size());
@@ -472,6 +598,5 @@ public class ErliDAO {
         }
         return callableStatement;
     }
-
 
 }

@@ -109,10 +109,11 @@ public class DispersorService {
         return solicitudAnticipo;
     }
 
+    /**
     public SolicitudAnticipo ejecutarPromocion(ImporteAnticipo importeAnticipo,String email) throws BusinessException{
         promocionService.cobrarPromocion(importeAnticipo);
         return  this.dispersar(importeAnticipo);
-    }
+    }*/
 
 
     private Pago_STP generarfalsoStp(){

@@ -1,5 +1,6 @@
 package com.aura.qamm.controller;
 
+import com.aura.qamm.model.Acumulator;
 import com.aura.qamm.model.payment.CardAccount;
 import com.aura.qamm.model.payroll.PayDistribution;
 import com.aura.qamm.model.payroll.UserCredentials;
@@ -230,6 +231,28 @@ public class ErliController {
 
 
         return signed;
+    }
+
+    @PostMapping("recDeferred")
+    @CrossOrigin(origins = "*")
+    public String recDeferred(@RequestBody Acumulator acumulator){
+
+         logger.info("recDeferred acumulator:" + acumulator);
+         String resRecordDef = erliService.recordDeferred(acumulator.getCveColaborador());
+         logger.info("resRecordDef:" + resRecordDef);
+
+        return resRecordDef;
+    }
+
+    @PostMapping("acumulator")
+    @CrossOrigin(origins = "*")
+    public String acumulator(@RequestBody Acumulator acumulator){
+
+        logger.info("acumulator:" + acumulator);
+        String resAcumulator = erliService.acumulator(acumulator.getCveColaborador());
+        logger.info("resAcumulator:" + resAcumulator);
+
+        return resAcumulator;
     }
 
 }
