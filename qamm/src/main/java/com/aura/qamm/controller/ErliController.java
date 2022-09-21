@@ -1,5 +1,6 @@
 package com.aura.qamm.controller;
 
+import com.aura.qamm.model.Language;
 import com.aura.qamm.model.payroll.PayDistribution;
 import com.aura.qamm.model.payroll.UserCredentials;
 import com.aura.qamm.model.payroll.UserPR;
@@ -233,14 +234,14 @@ public class ErliController {
 
     @PostMapping("recDeferred")
     @CrossOrigin(origins = "*")
-    public String recDeferred(@RequestAttribute("claims") Claims claims){
+    public String recDeferred(@RequestAttribute("claims") Claims claims, @RequestBody Language language){
         logger.info("resRecordDef claims:" + claims);
         String sCollaboratorId = (String) claims.get("collaboratorId");
         logger.info("sCollaboratorId:" + sCollaboratorId);
         Long lCollaboratorId = Long.parseLong(sCollaboratorId);
         logger.info("lCollaboratorId:" + lCollaboratorId);
 
-        String resRecordDef = erliService.recordDeferred(lCollaboratorId);
+        String resRecordDef = erliService.recordDeferred(lCollaboratorId, language.getLang());
         logger.info("resRecordDef:" + resRecordDef);
 
         return resRecordDef;
@@ -248,13 +249,13 @@ public class ErliController {
 
     @PostMapping("acumulator")
     @CrossOrigin(origins = "*")
-    public String acumulator(@RequestAttribute("claims") Claims claims){
+    public String acumulator(@RequestAttribute("claims") Claims claims, @RequestBody Language language){
         logger.info("acumulator claims:" + claims);
         String sCollaboratorId = (String) claims.get("collaboratorId");
         logger.info("sCollaboratorId:" + sCollaboratorId);
         Long lCollaboratorId = Long.parseLong(sCollaboratorId);
         logger.info("lCollaboratorId:" + lCollaboratorId);
-        String resAcumulator = erliService.acumulator(lCollaboratorId);
+        String resAcumulator = erliService.acumulator(lCollaboratorId, language.getLang());
         logger.info("resAcumulator:" + resAcumulator);
 
         return resAcumulator;

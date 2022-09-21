@@ -51,6 +51,7 @@ com/aura/qamm/dto/Login.class
 com/aura/qamm/dao/AnticipoProgramadoDao.class
 com/aura/qamm/util/tabapay/TabaPayHelper.class
 com/aura/qamm/config/ServerConfig$1.class
+com/aura/qamm/model/Language.class
 com/aura/qamm/model/MailServer.class
 com/aura/qamm/dto/Promocion.class
 com/aura/qamm/controller/AnticipoProgramadoController.class

@@ -490,7 +490,7 @@ public class ErliDAO {
         return resultJSON;
     }
     */
-    public String recordDeferred(Long cveColaborador){
+    public String recordDeferred(Long cveColaborador, String lang){
         String resultJSON = null;
         Connection con = null;
         CallableStatement cStmt = null;
@@ -532,7 +532,7 @@ public class ErliDAO {
         return resultJSON;
     }
 
-    public String acumulator(Long cveColaborador){
+    public String acumulator(Long cveColaborador, String lang){
         String resultJSON = null;
         Connection con = null;
         CallableStatement cStmt = null;
