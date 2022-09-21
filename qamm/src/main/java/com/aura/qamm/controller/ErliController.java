@@ -236,6 +236,8 @@ public class ErliController {
     @CrossOrigin(origins = "*")
     public String recDeferred(@RequestAttribute("claims") Claims claims, @RequestBody Language language){
         logger.info("resRecordDef claims:" + claims);
+        logger.info("resRecordDef language:" + language);
+
         String sCollaboratorId = (String) claims.get("collaboratorId");
         logger.info("sCollaboratorId:" + sCollaboratorId);
         Long lCollaboratorId = Long.parseLong(sCollaboratorId);
