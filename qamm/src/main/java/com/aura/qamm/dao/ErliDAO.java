@@ -498,11 +498,11 @@ public class ErliDAO {
             DataSource dataSource = dataSourceConfig.getDataSource();
             con = dataSource.getConnection();
 
-            cStmt = con.prepareCall("{? = call APP_MOBILE_DIFIERE_REGISTRO_MI(?)}");
+            cStmt = con.prepareCall("{? = call APP_MOBILE_DIFIERE_REGISTRO_MI(?,?)}");
             cStmt.registerOutParameter(1, Types.OTHER);
 
             cStmt.setLong(2, cveColaborador);
-            //cStmt.setString(3, tabapay.getRequestBody());
+            cStmt.setString(3, lang);
             //cStmt.setString(4, pago_stp.getCadenaSellada());
             //cStmt.setString(4, tabapay.getTransactionID());
             //cStmt.setString(5, tabapay.getResponseBody());
@@ -540,11 +540,11 @@ public class ErliDAO {
             DataSource dataSource = dataSourceConfig.getDataSource();
             con = dataSource.getConnection();
 
-            cStmt = con.prepareCall("{? = call APP_MOBILE_ACUMULADOS_MI(?)}");
+            cStmt = con.prepareCall("{? = call APP_MOBILE_ACUMULADOS_MI(?,?)}");
             cStmt.registerOutParameter(1, Types.OTHER);
 
             cStmt.setLong(2, cveColaborador);
-            //cStmt.setString(3, tabapay.getRequestBody());
+            cStmt.setString(3, lang);
             //cStmt.setString(4, pago_stp.getCadenaSellada());
             //cStmt.setString(4, tabapay.getTransactionID());
             //cStmt.setString(5, tabapay.getResponseBody());
