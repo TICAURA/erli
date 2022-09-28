@@ -21,6 +21,8 @@ public class Colaborador {
     private String monto_max;
     private String mensajeApp;
 
+    private String tieneDeduccionPrevia;
+
     public Colaborador(Integer idColaborador) {
         this.idColaborador = idColaborador;
     }
@@ -47,6 +49,14 @@ public class Colaborador {
                 ", aMaterno='" + aMaterno + '\'' +
                 ", token='" + token + '\'' +
                 ", fechaLimite='" + fechaLimite + '\'' +
+                ", beneficioAdicional='" + beneficioAdicional + '\'' +
+                ", personaId=" + personaId +
+                ", fechaIngreso=" + fechaIngreso +
+                ", clienteId=" + clienteId +
+                ", monto_min='" + monto_min + '\'' +
+                ", monto_max='" + monto_max + '\'' +
+                ", mensajeApp='" + mensajeApp + '\'' +
+                ", tieneDeduccionPrevia='" + tieneDeduccionPrevia + '\'' +
                 '}';
     }
 
@@ -178,5 +188,13 @@ public class Colaborador {
 
     public void setMensajeApp(String mensajeApp) {
         this.mensajeApp = mensajeApp;
+    }
+
+    public String getTieneDeduccionPrevia() {
+        return tieneDeduccionPrevia;
+    }
+
+    public void setTieneDeduccionPrevia(String tieneDeduccionPrevia) {
+        this.tieneDeduccionPrevia = tieneDeduccionPrevia;
     }
 }

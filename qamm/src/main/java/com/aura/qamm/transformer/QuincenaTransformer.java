@@ -21,6 +21,7 @@ public interface QuincenaTransformer {
         jsonPaths.add("importeMinimo");
         jsonPaths.add("importeMaximo");
         jsonPaths.add("mensajeApp");
+        jsonPaths.add("tieneDeduccionPrevia");
 
         Map<String,String> pathValues = JSONPathUtil.evaluateJSONPath(rawDBJSON,jsonPaths);
 
@@ -40,6 +41,7 @@ public interface QuincenaTransformer {
         colaborador.setMonto_min(pathValues.get("importeMinimo"));
         colaborador.setMonto_max(pathValues.get("importeMaximo"));
         colaborador.setMensajeApp(pathValues.get("mensajeApp"));
+        colaborador.setTieneDeduccionPrevia(pathValues.get("tieneDeduccionPrevia"));
         //colaborador.set
         //colaborador.set
         //colaborador.set
