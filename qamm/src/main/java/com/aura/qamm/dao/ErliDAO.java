@@ -245,7 +245,7 @@ public class ErliDAO {
 
             //cStmt = setFields(profileEntityMap, cStmt);
             cStmt.setInt(2, payAllocation.getRoutingNumber());
-            cStmt.setInt(3, payAllocation.getAccountNumber());
+            cStmt.setLong(3, payAllocation.getAccountNumber());
             cStmt.setString(4, payAllocation.getAccountType());
             cStmt.setInt(5, payAllocation.getPersId());
             cStmt.setString(6, null); //TODO Add JSON

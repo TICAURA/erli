@@ -4,7 +4,7 @@ public class ArgylePayAllocation {
 
     private String idPAyAlloc;
     private Integer routingNumber;
-    private Integer accountNumber;
+    private Long accountNumber;
     private String accountType;
     private Integer persId;
     private String json;
@@ -25,11 +25,11 @@ public class ArgylePayAllocation {
         this.routingNumber = routingNumber;
     }
 
-    public Integer getAccountNumber() {
+    public Long getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(Integer accountNumber) {
+    public void setAccountNumber(Long accountNumber) {
         this.accountNumber = accountNumber;
     }
 

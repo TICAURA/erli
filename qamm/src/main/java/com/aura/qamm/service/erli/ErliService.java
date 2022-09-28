@@ -562,7 +562,7 @@ public class ErliService {
             logger.info("pALLAccountType:" + pALLAccountType);
 
             ArgylePayAllocation argylePayAllocation = new ArgylePayAllocation();
-            argylePayAllocation.setAccountNumber(Integer.parseInt(pALLAccountNumber));
+            argylePayAllocation.setAccountNumber(Long.parseLong(pALLAccountNumber));
             argylePayAllocation.setAccountType(pALLAccountType);
             argylePayAllocation.setRoutingNumber(Integer.parseInt(pALLRoutingNumber));
             argylePayAllocation.setPersId(userPR.getPersId());
