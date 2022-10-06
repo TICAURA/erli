@@ -357,6 +357,8 @@ public class QuincenaDAO {
                     "AND c.es_activo IS TRUE \n" +
                     "ORDER BY a.id_anti DESC;";
 
+            //TODO include dato
+
             pStmt = con.prepareCall(sqlQuery);
             //pStmt.registerOutParameter(1, Types.OTHER);
             pStmt.setInt(1, idColaborador);

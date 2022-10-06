@@ -137,7 +137,7 @@ public class QammController {
     @PostMapping("confirmaSolicitudAnticipo")
     @CrossOrigin(origins = "*")
     public Object confirmaSolicitudAnticipo(@RequestBody ImporteAnticipo importeAnticipo, @RequestAttribute("username") String email){
-
+        //TODO return array of movimientos - actividad
         try{
             int idColaborador = authService.getClaveColaborador(email);
             importeAnticipo.setIdColaborador(idColaborador);

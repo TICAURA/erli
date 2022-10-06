@@ -22,6 +22,8 @@ public class Movimiento {
     private String centroCostos;
     private String idEmpresa;
 
+    private String status;
+
 
     public Integer getIdColaborador() {
         return idColaborador;
@@ -119,6 +121,14 @@ public class Movimiento {
         this.idEmpresa = idEmpresa;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Movimiento(Integer idColaborador, Long idMovimiento, String claveAutorizacion, String fechaOperacion, Double importeSolicitado, Double importeComision, Double importeTotal) {
         this.idColaborador = idColaborador;
         this.idMovimiento = idMovimiento;
@@ -138,14 +148,16 @@ public class Movimiento {
                 ", fechaOperacion='" + fechaOperacion + '\'' +
                 ", importeSolicitado=" + importeSolicitado +
                 ", importeComision=" + importeComision +
-                ", promocion="+ promocion+
+                ", promocion=" + promocion +
                 ", importeTotal=" + importeTotal +
+                ", promocionId=" + promocionId +
                 ", periodoAnterior=" + periodoAnterior +
                 ", fechaSolicita='" + fechaSolicita + '\'' +
                 ", fechaTransferencia='" + fechaTransferencia + '\'' +
                 ", periodicidad='" + periodicidad + '\'' +
                 ", centroCostos='" + centroCostos + '\'' +
                 ", idEmpresa='" + idEmpresa + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 

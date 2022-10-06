@@ -9,6 +9,10 @@ public class ArgylePayAllocation {
     private Integer persId;
     private String json;
 
+    private String allocationValue;
+    private String allocationId;
+    private String allocationAcount;
+
     public String getIdPAyAlloc() {
         return idPAyAlloc;
     }
@@ -55,5 +59,29 @@ public class ArgylePayAllocation {
 
     public void setJson(String json) {
         this.json = json;
+    }
+
+    public String getAllocationValue() {
+        return allocationValue;
+    }
+
+    public void setAllocationValue(String allocationValue) {
+        this.allocationValue = allocationValue;
+    }
+
+    public String getAllocationId() {
+        return allocationId;
+    }
+
+    public void setAllocationId(String allocationId) {
+        this.allocationId = allocationId;
+    }
+
+    public String getAllocationAcount() {
+        return allocationAcount;
+    }
+
+    public void setAllocationAcount(String allocationAcount) {
+        this.allocationAcount = allocationAcount;
     }
 }

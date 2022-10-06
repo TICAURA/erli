@@ -17,11 +17,13 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ErliService {
@@ -431,8 +433,11 @@ public class ErliService {
 
         //Get payouts
         logger.info("payout ****** INI");
-        String payouts = getLocatedEntity("payouts.properties", "Payout",
-                "$['results'][?(@.account == \"" + userPR.getAccount() + "\")]");
+        //String payouts = getLocatedEntity("payouts.properties", "Payout",
+        //        "$['results'][?(@.account == \"" + userPR.getAccount() + "\")]");
+        String payouts = getLocatedEntityLast("payouts.properties", "Payout",
+                "$['results'][?(@.account == \"" + userPR.getAccount() + "\")]",
+                    "$['results'][?(@.account == \"" + userPR.getAccount() + "\")]['payout_date']");
         logger.info("payout ****** END");
         //Extract payouts data
         if (payouts != null && !payouts.equals("[]") && !payouts.equals("")) {
@@ -507,7 +512,9 @@ public class ErliService {
             argylePayout.setPyStatus(pyStatus);
             argylePayout.setPyType(pyType);
 
-            LocalDate pDatetime = LocalDate.parse("22-04-2022", DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            //LocalDate pDatetime = LocalDate.parse("22-04-2022", DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                                                                                            //2022-09-30T00:00:00Z
+            LocalDate pDatetime = LocalDate.parse(pyPayoutDate, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
             //argylePayout.setPyPayoutDate(pyPayoutDate);
             //argylePayout.setPyPayoutPeriodStart(pyPayoutPeriodStart);
             //argylePayout.setPyPayoutPeriodEnd(pyPayoutPeriodEnd);
@@ -543,37 +550,53 @@ public class ErliService {
 
         //Get pay allocations
         logger.info("payallocs ****** INI");
-        String payAlloc = getLocatedEntity("payAllocs.properties", "PayAllocs",
-                "$['results'][?(@.account == \"" + userPR.getAccount() + "\")]");
+        //String payAlloc = getLocatedEntity("payAllocs.properties", "PayAllocs",
+        //        "$['results'][?(@.account == \"" + userPR.getAccount() + "\")]");
+
+        List<String> payAllocS = getLocatedEntities("payAllocs.properties", "PayAllocs",
+                        "$['results'][?(@.account == \"" + userPR.getAccount() + "\")]");
+
         logger.info("payallocs ****** END");
 
-        //Extract pay allocation data
-        if (payAlloc != null && !payAlloc.equals("[]") && !payAlloc.equals("")) {
-            Map<String, String> payAllocMap = JSONPathUtil.getAllPathWithValues(payAlloc);
+        for (String payAlloc : payAllocS) {
+            //Extract pay allocation data
+            if (payAlloc != null && !payAlloc.equals("[]") && !payAlloc.equals("")) {
+                Map<String, String> payAllocMap = JSONPathUtil.getAllPathWithValues(payAlloc);
 
-            String pALLId = payAllocMap.get("$['id']");
-            String pALLRoutingNumber = payAllocMap.get("$['bank_account']['routing_number']");
-            String pALLAccountNumber = payAllocMap.get("$['bank_account']['account_number']");
-            String pALLAccountType = payAllocMap.get("$['bank_account']['account_type']");
+                String pALLId = payAllocMap.get("$['id']");
+                String pALLRoutingNumber = payAllocMap.get("$['bank_account']['routing_number']");
+                String pALLAccountNumber = payAllocMap.get("$['bank_account']['account_number']");
+                String pALLAccountType = payAllocMap.get("$['bank_account']['account_type']");
 
-            logger.info("pALLId:" + pALLId);
-            logger.info("pALLRoutingNumber:" + pALLRoutingNumber);
-            logger.info("pALLAccountNumber:" + pALLAccountNumber);
-            logger.info("pALLAccountType:" + pALLAccountType);
+                //String pALLId = payAllocMap.get("$['id']");
+                String pALLAccount = payAllocMap.get("$['account']");
+                String pALLValue = payAllocMap.get("$['allocation_value']");
 
-            ArgylePayAllocation argylePayAllocation = new ArgylePayAllocation();
-            argylePayAllocation.setAccountNumber(Long.parseLong(pALLAccountNumber));
-            argylePayAllocation.setAccountType(pALLAccountType);
-            argylePayAllocation.setRoutingNumber(Integer.parseInt(pALLRoutingNumber));
-            argylePayAllocation.setPersId(userPR.getPersId());
-            argylePayAllocation.setJson(payAlloc);
+                logger.info("pALLId:" + pALLId);
+                logger.info("pALLRoutingNumber:" + pALLRoutingNumber);
+                logger.info("pALLAccountNumber:" + pALLAccountNumber);
+                logger.info("pALLAccountType:" + pALLAccountType);
 
-            String profileResult = erliDAO.registraArgylePayAllocations(argylePayAllocation, userPR);
-            logger.info("PayAllocs Result Insert Result:" + profileResult);
+                logger.info("pALLAccount:" + pALLAccount);
+                logger.info("pALLValue:" + pALLValue);
 
+                ArgylePayAllocation argylePayAllocation = new ArgylePayAllocation();
+                argylePayAllocation.setAccountNumber(Long.parseLong(pALLAccountNumber));
+                argylePayAllocation.setAccountType(pALLAccountType);
+                argylePayAllocation.setRoutingNumber(Integer.parseInt(pALLRoutingNumber));
+
+                argylePayAllocation.setPersId(userPR.getPersId());
+                argylePayAllocation.setJson(payAlloc);
+
+                argylePayAllocation.setAllocationId(pALLId);
+                argylePayAllocation.setAllocationValue(pALLValue);
+                argylePayAllocation.setAllocationAcount(pALLAccount);
+
+                String profileResult = erliDAO.registraArgylePayAllocations(argylePayAllocation, userPR);
+                logger.info("PayAllocs Result Insert Result:" + profileResult);
+
+            } else logger.error("PayAllocs not Found");
         }
-        else logger.error("PayAllocs not Found");
-
 
         //TODO Update in DB cross reference of
         String user = userPR.getUser();
@@ -623,7 +646,7 @@ public class ErliService {
 
             logger.info("hasNext:" + hasNext);
             logger.info("pathOfIdLocator:" + pathOfIdLocator);
-            logger.info("valPathOfIdLocator:" + valPathOfIdLocator);
+            //logger.info("valPathOfIdLocator:" + valPathOfIdLocator);
             page++;
 
         }
@@ -635,6 +658,190 @@ public class ErliService {
             Map<String, String> entityLocatedPaths = JSONPathUtil.getAllPathWithValues(valPathOfIdLocator);
             logger.info(apiRef + " entityLocatedPaths:" + entityLocatedPaths);
             String entityLocatedId = entityLocatedPaths.get("$[0]['id']"); //Unique element in array
+            logger.info(apiRef + " entityLocatedId:" + entityLocatedId);
+            Properties servicePropertiesUP2 = propertiesHelper.loadProperties(
+                    apiProps, apiRef);
+            String entityEndpoint = (String) servicePropertiesUP2.get("srvEndpoint");
+            entityEndpoint = entityEndpoint + "/" + entityLocatedId;
+            servicePropertiesUP2.setProperty("srvEndpoint", entityEndpoint);
+
+            String entitySpecific = serviceInvoker.invokeBasicAuthBody(servicePropertiesUP2, "");
+            logger.info(apiRef + " entitySpecific:" + entitySpecific);
+            result = entitySpecific;
+        }
+
+        return result;
+    }
+
+    private List<String> getLocatedEntities(String apiProps, String apiRef, String pathOfIdLocator){
+        List<String> result = new ArrayList<String>();
+        int page = 0;
+        String hasNext = ""; //STARTER
+        String valPathOfIdLocator = "[]";//STARTER
+        //String pathOfIdLocator = "$['results'][?(@.account == \"" + userPR.getAccount() + "\")]";
+        String pathOfNext = "$['next']";
+
+        List<String> listEntityPaths = new ArrayList<String>();
+        listEntityPaths.add(pathOfIdLocator);
+        listEntityPaths.add(pathOfNext);
+
+        //Get all entitys from Argyle
+        Properties servicePropertiesEntities = propertiesHelper.loadProperties(
+                apiProps, apiRef + "-s");
+
+        while (hasNext != null){
+            logger.info("hasNext is not null");
+            //if (!valPathOfIdLocator.equals("[]")) break;
+            logger.info("***** Page:" + page);
+            //OVERRIDE ENDPOINT AFTER 1st Attempt
+            if (page > 0) servicePropertiesEntities.setProperty("srvEndpoint",hasNext);
+
+            String entities = serviceInvoker.invokeBasicAuthBody(servicePropertiesEntities,"");
+            logger.info("apiRef entities:" + entities);
+
+            Map<String,String> evaluatedPaths = JSONPathUtil.evaluateJSONPath(entities,listEntityPaths);
+            valPathOfIdLocator = evaluatedPaths.get(pathOfIdLocator);
+            hasNext = evaluatedPaths.get(pathOfNext);
+
+            logger.info("hasNext:" + hasNext);
+            logger.info("pathOfIdLocator:" + pathOfIdLocator);
+            ///
+            logger.info("valPathOfIdLocator:" + valPathOfIdLocator);
+            //GET DETAILS IF USER FOUND
+            //Get detail entity from Argyle
+            Properties servicePropertiesUP2 = propertiesHelper.loadProperties(
+                    apiProps, apiRef);
+            if (valPathOfIdLocator != null && !valPathOfIdLocator.equals("[]")) {
+                logger.info(apiRef + " entityLocated:" + valPathOfIdLocator);
+                Map<String, String> entityLocatedPaths = JSONPathUtil.getAllPathWithValues(valPathOfIdLocator);
+                logger.info(apiRef + " entityLocatedPaths:" + entityLocatedPaths);
+
+                List<String> arraypaths = new ArrayList<String>();
+                arraypaths.add("$.length()");
+                Map<String,String> mapArrayJP = JSONPathUtil.evaluateJSONPath(valPathOfIdLocator,arraypaths);
+                String arraySize = mapArrayJP.get("$.length()"); //Size
+                logger.info("arraySize:" + arraySize);
+                Integer iarraySize = 1;
+                if (arraySize != null){
+                    try{ iarraySize = Integer.parseInt(arraySize);}
+                    catch (Exception e){
+                        logger.error("Error converting array in jason [arraySize: " + arraySize + "]." + e.getMessage());
+                    }
+                }
+                String baseEndpoint = (String) servicePropertiesUP2.get("srvEndpoint");
+                for (int i=0; i < iarraySize; i++) {
+                    String entityLocatedId = entityLocatedPaths.get("$[" + i + "]['id']"); //Unique element in array
+                    logger.info(apiRef + " entityLocatedId:" + entityLocatedId);
+                    //Properties servicePropertiesUP2 = propertiesHelper.loadProperties(
+                    //        apiProps, apiRef);
+                    //String entityEndpoint = (String) servicePropertiesUP2.get("srvEndpoint");
+                    String entityEndpoint = baseEndpoint + "/" + entityLocatedId;
+                    servicePropertiesUP2.setProperty("srvEndpoint", entityEndpoint);
+
+                    String entitySpecific = serviceInvoker.invokeBasicAuthBody(servicePropertiesUP2, "");
+                    logger.info(apiRef + " entitySpecific:" + entitySpecific);
+                    result.add(entitySpecific);
+                }
+            }
+            ///
+
+            //logger.info("valPathOfIdLocator:" + valPathOfIdLocator);
+            page++;
+
+        }
+
+        return result;
+    }
+
+
+    private String getLocatedEntityLast(String apiProps, String apiRef, String pathOfIdLocator, String pathOfDate){
+        String result = new String();
+        int page = 0;
+        String hasNext = ""; //STARTER
+        String valPathOfIdLocator = "[]";//STARTER
+        //String pathOfIdLocator = "$['results'][?(@.account == \"" + userPR.getAccount() + "\")]";
+        String pathOfNext = "$['next']";
+
+        List<String> listEntityPaths = new ArrayList<String>();
+        listEntityPaths.add(pathOfIdLocator);
+        listEntityPaths.add(pathOfNext);
+        listEntityPaths.add(pathOfDate);
+
+        //Get all entitys from Argyle
+        Properties servicePropertiesEntities = propertiesHelper.loadProperties(
+                apiProps, apiRef + "-s");
+
+        Map<String,String> entitiesMap = new HashMap<String,String>();
+        //Set<String> entitiesSet = new HashSet<String>();
+        while (hasNext != null){
+            logger.info("hasNext is not null");
+            //if (!valPathOfIdLocator.equals("[]")) break; //QUIT BREAK -> Continue if match found
+            logger.info("***** Page:" + page);
+            //OVERRIDE ENDPOINT AFTER 1st Attempt
+            if (page > 0) servicePropertiesEntities.setProperty("srvEndpoint",hasNext);
+
+            String entities = serviceInvoker.invokeBasicAuthBody(servicePropertiesEntities,"");
+            logger.info("apiRef entities:" + entities);
+
+            Map<String,String> evaluatedPaths = JSONPathUtil.evaluateJSONPath(entities,listEntityPaths);
+            valPathOfIdLocator = evaluatedPaths.get(pathOfIdLocator);
+            hasNext = evaluatedPaths.get(pathOfNext);
+            String valEntityDate = evaluatedPaths.get(pathOfDate);
+
+            logger.info("hasNext:" + hasNext);
+            logger.info("pathOfIdLocator:" + pathOfIdLocator);
+            logger.info("pathOfDate:" + pathOfDate);
+            logger.info("valPathOfIdLocator:" + valPathOfIdLocator);
+            if (!valPathOfIdLocator.equals("[]")) logger.info("********************");
+            logger.info("valEntityDate:" + valEntityDate);
+            if (valEntityDate != null) {
+                valEntityDate = valEntityDate.replace("[", "");
+                valEntityDate = valEntityDate.replace("]", "");
+                valEntityDate = valEntityDate.replace("\"", "");
+            }
+            logger.info("CLEAN valEntityDate:" + valEntityDate);
+            if (!valPathOfIdLocator.equals("[]")) {
+                logger.info("Adding key entityDate:" + valEntityDate);
+                logger.info("Adding val entities:" + entities);
+                entitiesMap.put(valEntityDate, entities);
+            }
+            //if (!valPathOfIdLocator.equals("[]")) entitiesSet.add(entityDate);
+
+            page++;
+
+        }
+        if ((entitiesMap != null) && (entitiesMap.size() > 0) ) {
+            logger.info("entitiesMap.keySet():" + entitiesMap.keySet());
+            logger.info("entitiesMap:" + entitiesMap);
+            //SELECT LAST Entity
+            List<String> orderedKeys = entitiesMap.entrySet().stream()
+                    .map(Map.Entry::getKey)
+                    .sorted()
+                    .collect(Collectors.toList());
+            logger.info("orderedKeys:" + orderedKeys);
+            String lastKey = orderedKeys.get(orderedKeys.size() - 1);
+            logger.info("lastKey:" + lastKey);
+
+            //ReCalculate valPathOfIdLocator
+            valPathOfIdLocator = entitiesMap.get(lastKey);
+        }
+
+        //GET DETAILS IF USER FOUND
+        //Get detail entity from Argyle
+        if (valPathOfIdLocator != null && !valPathOfIdLocator.equals("[]")) {
+            logger.info(apiRef + " entityLocated:" + valPathOfIdLocator);
+            //Map<String, String> entityLocatedPaths = JSONPathUtil.getAllPathWithValues(valPathOfIdLocator);
+            List<String> entityIdentifiedPaths = new ArrayList<>();
+            entityIdentifiedPaths.add(pathOfIdLocator + "['id']");
+            Map<String, String> entityLocatedPaths =
+                    JSONPathUtil.evaluateJSONPath(valPathOfIdLocator,entityIdentifiedPaths);
+            logger.info(apiRef + " entityLocatedPaths:" + entityLocatedPaths);
+            //String entityLocatedId = entityLocatedPaths.get("$[0]['id']"); //Unique element in array
+            logger.info("pathOfIdLocator + ['id']:" + pathOfIdLocator + "['id']");
+            String entityLocatedId = entityLocatedPaths.get(pathOfIdLocator + "['id']"); //Unique element in array
+            entityLocatedId = entityLocatedId.replace("[","");
+            entityLocatedId = entityLocatedId.replace("]","");
+            entityLocatedId = entityLocatedId.replace("\"","");
             logger.info(apiRef + " entityLocatedId:" + entityLocatedId);
             Properties servicePropertiesUP2 = propertiesHelper.loadProperties(
                     apiProps, apiRef);

@@ -240,7 +240,7 @@ public class ErliDAO {
             con = dataSource.getConnection();
 
             cStmt = con.prepareCall("{? = call APP_MOBILE_LINK_BANK_ACCOUNT_MI(" +
-                    "?,?,?,?,?)}");
+                    "?,?,?,?,?,?,?,?)}");
             cStmt.registerOutParameter(1, Types.OTHER);
 
             //cStmt = setFields(profileEntityMap, cStmt);
@@ -248,7 +248,12 @@ public class ErliDAO {
             cStmt.setLong(3, payAllocation.getAccountNumber());
             cStmt.setString(4, payAllocation.getAccountType());
             cStmt.setInt(5, payAllocation.getPersId());
-            cStmt.setString(6, null); //TODO Add JSON
+
+            cStmt.setString(6, payAllocation.getAllocationValue());
+            cStmt.setString(7,payAllocation.getAllocationAcount());
+            cStmt.setString(8,payAllocation.getAllocationId());
+
+            cStmt.setString(9, payAllocation.getJson());
 
             cStmt.execute();
             result = cStmt.getString(1);
