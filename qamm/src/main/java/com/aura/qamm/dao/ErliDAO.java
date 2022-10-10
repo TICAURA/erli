@@ -579,6 +579,46 @@ public class ErliDAO {
         return resultJSON;
     }
 
+    //SELECT F_GET_PARAMETRO('P_SYNCTIME', NULL);
+    public String syncTime(String syncTime){
+        String resultJSON = null;
+        Connection con = null;
+        CallableStatement cStmt = null;
+        try {
+            DataSource dataSource = dataSourceConfig.getDataSource();
+            con = dataSource.getConnection();
+
+            cStmt = con.prepareCall("{? = call F_GET_PARAMETRO(?,?)}");
+            cStmt.registerOutParameter(1, Types.OTHER);
+
+            cStmt.setString(2, syncTime);
+            cStmt.setObject(3, null);
+
+            cStmt.execute();
+            resultJSON = cStmt.getString(1);
+
+            logger.info("SyncTime resultJSON:" + resultJSON);
+        }
+        catch (Exception e){
+            logger.error("SyncTime Exception:" + e.getMessage());
+            e.printStackTrace();
+        }
+        finally {
+            try { if (cStmt != null) { cStmt.close(); }
+            }
+            catch (Exception eSt) {
+                logger.error("Closure Sentence Excepcion:" + eSt.getMessage());
+            }
+            try { if (con != null) { con.close(); }
+            }
+            catch (Exception eCon) {
+                logger.error("Closure Connection Excepcion:" + eCon.getMessage());
+            }
+        }
+
+        return resultJSON;
+    }
+
     private CallableStatement setFields(Map<Integer, ArgyleEntity> fieldMap, CallableStatement callableStatement){
         logger.info("fieldMap.size():" + fieldMap.size());
         for (int i = 2; i <= fieldMap.size(); i++){

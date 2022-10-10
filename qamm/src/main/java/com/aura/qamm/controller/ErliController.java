@@ -6,7 +6,9 @@ import com.aura.qamm.model.payroll.UserCredentials;
 import com.aura.qamm.model.payroll.UserPR;
 import com.aura.qamm.service.erli.ErliService;
 import com.aura.qamm.service.erli.TabapayOrch;
+import com.aura.qamm.util.JSONPathUtil;
 import io.jsonwebtoken.Claims;
+import org.bouncycastle.crypto.ec.ECElGamalDecryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
@@ -133,7 +138,23 @@ public class ErliController {
                                @RequestAttribute("claims") Claims claims){
         logger.info("registraLink...");
         try {
-            Thread.sleep(40 * 1000);
+            String syncTimeJSON = erliService.syncTime("P_SYNCTIME");
+            int syncTimei = 180 * 1000;
+            logger.info("Def syncTimei = " + syncTimei);
+
+            Map<String,String> jsonSyncTimeMap = JSONPathUtil.getAllPathWithValues(syncTimeJSON);
+            logger.info("jsonSyncTimeMap:" + jsonSyncTimeMap);
+
+            try {
+                String syncTime = jsonSyncTimeMap.get("$['valor']");
+                syncTimei = Integer.parseInt(syncTime);
+            }
+            catch (Exception e){
+                logger.error("Exception on syncTime : " + e.getMessage());
+            }
+
+            logger.info("Estimated syncTimei = " + syncTimei);
+            Thread.sleep(syncTimei);
         }
         catch (Exception e){
             Thread.currentThread().interrupt();

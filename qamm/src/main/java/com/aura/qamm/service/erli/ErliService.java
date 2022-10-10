@@ -935,5 +935,9 @@ public class ErliService {
         return erliDAO.recordDeferred(cveColaborador,lang);
     }
 
+    public String syncTime(String syncTime){
+        return erliDAO.syncTime(syncTime);
+    }
+
 }
 
