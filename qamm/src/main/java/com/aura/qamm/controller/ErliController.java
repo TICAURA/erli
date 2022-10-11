@@ -137,30 +137,33 @@ public class ErliController {
     public String registraLink(@RequestBody UserPR userPR, @RequestAttribute("username") String email,
                                @RequestAttribute("claims") Claims claims){
         logger.info("registraLink...");
+
+        String syncTimeJSON = erliService.syncTime("P_SYNCTIME");
+        int syncTimei = 180 * 1000;
+        logger.info("Def syncTimei = " + syncTimei);
+
+        Map<String,String> jsonSyncTimeMap = JSONPathUtil.getAllPathWithValues(syncTimeJSON);
+        logger.info("jsonSyncTimeMap:" + jsonSyncTimeMap);
+
         try {
-            String syncTimeJSON = erliService.syncTime("P_SYNCTIME");
-            int syncTimei = 180 * 1000;
-            logger.info("Def syncTimei = " + syncTimei);
+            String syncTime = jsonSyncTimeMap.get("$['valor']");
+            logger.info("syncTime:" + syncTime);
+            syncTimei = Integer.parseInt(syncTime);
+        }
+        catch (Exception e){
+            logger.error("Exception on syncTime Conversion : " + e.getMessage());
+        }
 
-            Map<String,String> jsonSyncTimeMap = JSONPathUtil.getAllPathWithValues(syncTimeJSON);
-            logger.info("jsonSyncTimeMap:" + jsonSyncTimeMap);
-
-            try {
-                String syncTime = jsonSyncTimeMap.get("$['valor']");
-                syncTimei = Integer.parseInt(syncTime);
-            }
-            catch (Exception e){
-                logger.error("Exception on syncTime : " + e.getMessage());
-            }
-
+        try {
             logger.info("Estimated syncTimei = " + syncTimei);
             Thread.sleep(syncTimei);
+            logger.info("Ending Delay Expired syncTimei :" + syncTimei);
         }
         catch (Exception e){
             Thread.currentThread().interrupt();
             logger.info("Delay error");
         }
-        logger.info("registraLink");
+        //logger.info("registraLink");
         logger.info("userPR:" + userPR.toString());
         logger.info("claims:" + claims);
         logger.info("user:" + userPR.getUser());
