@@ -3,8 +3,12 @@ package com.aura.qamm.model.payroll;
 public class ArgylePayAllocation {
 
     private String idPAyAlloc;
-    private Integer routingNumber;
-    private Long accountNumber;
+    //private Integer routingNumber;
+    //private Long accountNumber;
+
+    private String routingNumber;
+    private String accountNumber;
+
     private String accountType;
     private Integer persId;
     private String json;
@@ -21,6 +25,23 @@ public class ArgylePayAllocation {
         this.idPAyAlloc = idPAyAlloc;
     }
 
+    public String getRoutingNumber() {
+        return routingNumber;
+    }
+
+    public void setRoutingNumber(String routingNumber) {
+        this.routingNumber = routingNumber;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    /**
     public Integer getRoutingNumber() {
         return routingNumber;
     }
@@ -36,6 +57,8 @@ public class ArgylePayAllocation {
     public void setAccountNumber(Long accountNumber) {
         this.accountNumber = accountNumber;
     }
+    */
+
 
     public String getAccountType() {
         return accountType;

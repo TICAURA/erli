@@ -244,8 +244,11 @@ public class ErliDAO {
             cStmt.registerOutParameter(1, Types.OTHER);
 
             //cStmt = setFields(profileEntityMap, cStmt);
-            cStmt.setInt(2, payAllocation.getRoutingNumber());
-            cStmt.setLong(3, payAllocation.getAccountNumber());
+
+            //cStmt.setInt(2, payAllocation.getRoutingNumber());
+            //cStmt.setLong(3, payAllocation.getAccountNumber());
+            cStmt.setString(2, payAllocation.getRoutingNumber());
+            cStmt.setString(3, payAllocation.getAccountNumber());
             cStmt.setString(4, payAllocation.getAccountType());
             cStmt.setInt(5, payAllocation.getPersId());
 
