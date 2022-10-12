@@ -515,12 +515,14 @@ public class ErliService {
             //LocalDate pDatetime = LocalDate.parse("22-04-2022", DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                                                                                             //2022-09-30T00:00:00Z
             LocalDate pDatetime = LocalDate.parse(pyPayoutDate, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+            LocalDate pStartDatetime = LocalDate.parse(pyPayoutPeriodStart, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+            LocalDate pEndDatetime = LocalDate.parse(pyPayoutPeriodEnd, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
             //argylePayout.setPyPayoutDate(pyPayoutDate);
             //argylePayout.setPyPayoutPeriodStart(pyPayoutPeriodStart);
             //argylePayout.setPyPayoutPeriodEnd(pyPayoutPeriodEnd);
             argylePayout.setPyPayoutDate(pDatetime);
-            argylePayout.setPyPayoutPeriodStart(pDatetime);
-            argylePayout.setPyPayoutPeriodEnd(pDatetime);
+            argylePayout.setPyPayoutPeriodStart(pStartDatetime);
+            argylePayout.setPyPayoutPeriodEnd(pEndDatetime);
 
             argylePayout.setPyCurrency(pyCurrency);
             argylePayout.setPyGrossPay(pyGrossPay);
