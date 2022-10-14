@@ -176,7 +176,7 @@ public class ErliDAO {
             cStmt.setString(6, payout.getPyType());
             cStmt.setObject(7, payout.getPyPayoutDate()); //payout.getPyPayoutDate() //FIXME Format ME
             cStmt.setObject(8, payout.getPyPayoutPeriodStart()); //payout.getPyPayoutPeriodStart()) //FIXME Format ME
-            cStmt.setObject(9, payout.getPyPayoutPeriodStart()); //payout.getPyPayoutPeriodEnd() //FIXME Format ME
+            cStmt.setObject(9, payout.getPyPayoutPeriodEnd()); //payout.getPyPayoutPeriodEnd() //FIXME Format ME
             cStmt.setString(10, payout.getPyCurrency());
 
             cStmt.setString(11, payout.getPyGrossPay());
